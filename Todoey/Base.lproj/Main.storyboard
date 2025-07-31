@@ -33,6 +33,12 @@
                     </tableView>
                     <navigationItem key="navigationItem" title="Todoey App" largeTitleDisplayMode="always" id="cAh-o3-rDJ">
                         <barButtonItem key="backBarButtonItem" title="Back" id="8pU-2G-RNe"/>
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="FEu-ez-Ebd">
+                            <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <connections>
+                                <action selector="addbutton:" destination="WIg-DR-3fK" id="4Ua-An-R3g"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gTv-WU-trm" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
