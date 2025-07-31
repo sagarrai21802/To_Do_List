@@ -26,6 +26,15 @@ class TableViewController: UITableViewController {
         cell.textLabel?.text = dataitem[indexPath.row]
         return cell
     }
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        print(dataitem[indexPath.row])
+        if tableView.cellForRow(at: indexPath)?.accessoryType == .checkmark {
+            tableView.cellForRow(at: indexPath)?.accessoryType = .none
+        } else  {
+            tableView.cellForRow(at: indexPath)?.accessoryType = .checkmark
+        }
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
     
 }
 ///  Mark :-  In this we will extent the tablviewcontroller with data source
