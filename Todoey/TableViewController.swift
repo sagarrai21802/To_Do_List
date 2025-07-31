@@ -9,12 +9,25 @@
 import UIKit
 
 class TableViewController: UITableViewController {
-
+    let dataitem = [ "hey mike", "hello" ,"find remote"]
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
     }
-
-
+//    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+//        print("hello")
+//        return dataitem.count
+//    }
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return dataitem.count
+    }
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "TodoItemCell", for: indexPath)
+        cell.textLabel?.text = dataitem[indexPath.row]
+        return cell
+    }
+    
 }
+///  Mark :-  In this we will extent the tablviewcontroller with data source
+
 
