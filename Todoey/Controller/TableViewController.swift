@@ -9,7 +9,8 @@
 import UIKit
 
 class TableViewController: UITableViewController {
-    var dataitem = [ "hey mike", "hello" ,"find remote"]
+    var dataitem = [ "hey mike", "hello" ,"find remote","ssg","sgrssrg","sgrsr","srgsrgsr","srgsgr","sgrsra","sfse","sgrvaa","a","f","v","afw","vse","mmf","mr","fmm"]
+    var dataItem  = [ToDoList]()
     let userdefaults = UserDefaults.standard
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -70,8 +71,9 @@ class TableViewController: UITableViewController {
         let addbutton = UIAlertAction(title: "Add", style: .default) { add in
         // this will say what should happen
             print("success")
-            self.dataitem.append(usertextfield.text ?? "new item")
-            self.userdefaults.set(self.dataitem, forKey: "TodoList")
+            self.dataitem.append(usertextfield.text ?? "Data item")
+         //   self.dataItem.append(Task)
+            self.userdefaults.set(self.dataItem, forKey: "TodoList")
             self.tableView.reloadData()
             // in this we will suse the userinput and send it somehwere
         }
