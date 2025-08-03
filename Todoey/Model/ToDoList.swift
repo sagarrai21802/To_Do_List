@@ -7,7 +7,7 @@
 //
 
 import Foundation
-struct ToDoList {
-    var Task : String
-    var Done : Bool
+struct ToDoList : Codable {
+    var Task : String = ""
+    var Done : Bool = false
 }
