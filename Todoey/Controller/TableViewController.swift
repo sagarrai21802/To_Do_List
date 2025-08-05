@@ -66,7 +66,7 @@ class TableViewController: UITableViewController {
     
     // MARK: - checkmark adding on selection
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print(dataitem[indexPath.row])
+        //print(dataitem[indexPath.row])
         
         
         dataitem[indexPath.row].Done.toggle()
