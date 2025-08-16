@@ -7,14 +7,21 @@
 //
 
 import UIKit
+//import CoreData
 import CoreData
 class categoryViewController: UITableViewController {
     
-      let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
-    var categoryItem : [String] = ["TO BUY", "TO Sell" , "To order"]
+    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+    
+    
+    var categoryItem = [Category]()
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-     
+        print(FileManager.default.urls(for: .documentDirectory, in: .userDomainMask))
+     loadcategories()
+        
     }
     
     
@@ -28,15 +35,32 @@ class categoryViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "CategoryIdentifier", for : indexPath)
 //        var dataitems = categoryItem[indexPath.row]
-        cell.textLabel?.text = categoryItem[indexPath.row]
+        cell.textLabel?.text = categoryItem[indexPath.row].items
         return cell
+    }
+    
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        performSegue(withIdentifier: "gotonotes", sender: self)
     }
     
     
     
     
     
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let destinationVC = segue.destination as! TableViewController
+        
+        if let indexpath = tableView.indexPathForSelectedRow {
+            destinationVC.selectedItem = categoryItem[indexpath.row]
+        }
+    }
+    
 
+    
+    
+    
     @IBAction func addButton(_ sender: UIBarButtonItem) {
         var UItextfield = UITextField()
         
@@ -51,7 +75,12 @@ class categoryViewController: UITableViewController {
         let addbutton = UIAlertAction(title: "Add", style: .default) { add in
             // this will say what should happen
             print("success")
-            self.categoryItem.append(UItextfield.text!)
+            let newitem = Category(context : self.context)
+            newitem.items = UItextfield.text
+            self.categoryItem.append(newitem) 
+            self.savedata()
+            
+           
         
             
         }
@@ -68,6 +97,26 @@ class categoryViewController: UITableViewController {
         alert.addAction(cancelbutton)
         present(alert, animated: true, completion: nil)
     }
-   
+    func loadcategories() {
+        let request : NSFetchRequest<Category> = Category.fetchRequest()
+        
+        do {
+            categoryItem = try context.fetch(request)
+            tableView.reloadData()
+        } catch {
+            print(error)
+        }
+     
+        
+    }
+    func savedata(){
+        do {
+            try context.save()
+            self.tableView.reloadData()
+        } catch {
+            print(error)
+        }
+
+    }
 
 }

@@ -9,6 +9,7 @@
 import UIKit
 import CoreData
 
+
 class TableViewController: UITableViewController {
     
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
@@ -17,14 +18,18 @@ class TableViewController: UITableViewController {
     
     var dataitem = [Item]()
     
-    
+    var selectedItem : Category? {
+        didSet{
+            loadData()
+        }
+    }
     
     
     //MARK: - VIEW DID LOAD UP
     override func viewDidLoad() {
         super.viewDidLoad()
         print(FileManager.default.urls(for: .documentDirectory, in: .userDomainMask))
-//        let request : NSFetchRequest<Item> = Item.fetchRequest()
+        //        let request : NSFetchRequest<Item> = Item.fetchRequest()
         loadData()
         
     }
@@ -55,7 +60,7 @@ class TableViewController: UITableViewController {
     // MARK: - checkmark adding on selection
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-//        dataitem[indexPath.row].done.toggle()
+        //        dataitem[indexPath.row].done.toggle()
         context.delete(dataitem[indexPath.row])
         dataitem.remove(at: indexPath.row)
         saveitems()
@@ -68,7 +73,7 @@ class TableViewController: UITableViewController {
     
     
     
-
+    
     // here we are going to make a button that will make a new cell for every new work you are doing
     //MARK: - this function is for adding an item in that array means the add button
     @IBAction func addbutton(_ sender: UIBarButtonItem) {
@@ -92,6 +97,7 @@ class TableViewController: UITableViewController {
             let newItem = Item(context: self.context)
             newItem.done = false
             newItem.title = usertextfield.text!
+            newItem.parentCategory = self.selectedItem
             self.dataitem.append(newItem)
             
             self.saveitems()
@@ -118,26 +124,33 @@ class TableViewController: UITableViewController {
         
         do {
             try context.save()
+            tableView.reloadData()
         } catch {
             print("\(error)")
         }
-        tableView.reloadData()
+//        tableView.reloadData()
     }
     
     
     
     
     //MARK: - Loading of data
-    func loadData(with request : NSFetchRequest<Item> = Item.fetchRequest()) {
-      // let request : NSFetchRequest<Item> = Item.fetchRequest()
+    func loadData(with request : NSFetchRequest<Item> = Item.fetchRequest(), predicate : NSPredicate? = nil) {
+        let cateegorypredicate = NSPredicate(format: "parentCategory.items MATCHES %@" , selectedItem!.items!)
         
-        do {
-            dataitem = try context.fetch(request)
-            tableView.reloadData()
-            
-        } catch {
-            print(error)
+        if let additonalpredicate = predicate {
+            request.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [cateegorypredicate, additonalpredicate])
+        } else {
+            request.predicate = cateegorypredicate
         }
+            do {
+                dataitem = try context.fetch(request)
+                tableView.reloadData()
+                
+            } catch {
+                print(error)
+            }
+        
     }
 }
 
