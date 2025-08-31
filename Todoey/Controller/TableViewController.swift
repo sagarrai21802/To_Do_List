@@ -12,7 +12,10 @@ import RealmSwift
 
 class TableViewController:  SwipeTableViewController {
 
-    
+//    
+//    @IBAction func BackButtonpressed(_ sender: UIBarButtonItem) {
+//        sender.tintColor = .label
+//    }
     let realm = try! Realm()
     
     var dataitem : Results<Items>?
@@ -44,19 +47,41 @@ class TableViewController:  SwipeTableViewController {
     
     
     // MARK: - setting task into cell
+//    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+////        let cell = tableView.dequeueReusableCell(withIdentifier: "TodoItemCell", for: indexPath)
+//        let cell = super.tableView(tableView, cellForRowAt: indexPath)
+//        
+//        if let item = dataitem?[indexPath.row] {
+//            cell.textLabel?.text = item.name
+//            cell.accessoryType = item.done ? .checkmark : .none
+//        } else {
+//            cell.textLabel?.text = "Till now we don't have any item in it"
+//        }
+//        return cell
+//    }
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-//        let cell = tableView.dequeueReusableCell(withIdentifier: "TodoItemCell", for: indexPath)
         let cell = super.tableView(tableView, cellForRowAt: indexPath)
         
         if let item = dataitem?[indexPath.row] {
             cell.textLabel?.text = item.name
             cell.accessoryType = item.done ? .checkmark : .none
+            
+            if let baseColorHex = selectedItem?.color {
+                let baseColor = UIColor.fromHex(baseColorHex)
+                let totalItems = dataitem?.count ?? 1
+                let factor = CGFloat(indexPath.row) / CGFloat(totalItems)
+                let shadedColor = baseColor.withAlphaComponent(1.0 - factor * 0.7)
+                
+                cell.backgroundColor = shadedColor
+                cell.textLabel?.textColor = .white
+            }
         } else {
             cell.textLabel?.text = "Till now we don't have any item in it"
+            cell.backgroundColor = UIColor.gray
         }
+        
         return cell
     }
-    
     
     
     override func updatetable(at indexpath: IndexPath) {
