@@ -3,7 +3,7 @@
 ✨ “Your personal task manager with interactive UI and multiple data persistence techniques.”
 
 🎥 App Preview
-
+ https://drive.google.com/file/d/1YQGRah5Uk1YZrtE_L7Ib1OzPt_85CPo8/view?usp=sharing
 
 
 🚀 About the Project
