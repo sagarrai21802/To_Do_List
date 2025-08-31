@@ -48,6 +48,9 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="searchbar" destination="sV9-Ca-0mk" id="8FJ-Yv-xa7"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gTv-WU-trm" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -56,14 +59,14 @@
         <!--Navigation Controller-->
         <scene sceneID="uqD-RZ-ERn">
             <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="F8P-qY-kQG" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="4LX-jx-Nw9" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="bGu-Q7-ueq" userLabel="Todoey">
-                        <rect key="frame" x="0.0" y="118" width="393" height="44"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" largeTitles="YES" id="bGu-Q7-ueq" userLabel="Todoey">
+                        <rect key="frame" x="0.0" y="118" width="393" height="96"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <color key="barTintColor" systemColor="labelColor"/>
+                        <color key="tintColor" systemColor="labelColor"/>
+                        <color key="barTintColor" systemColor="linkColor"/>
                         <textAttributes key="titleTextAttributes">
                             <color key="textColor" systemColor="labelColor"/>
                         </textAttributes>
@@ -79,11 +82,10 @@
                         <segue destination="MkB-D7-l2f" kind="relationship" relationship="rootViewController" id="Oy6-GN-IHs"/>
                     </connections>
                 </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="F8P-qY-kQG" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="939.69465648854953" y="3.5211267605633805"/>
         </scene>
-        <!--Category View Controller-->
+        <!--Todoey-->
         <scene sceneID="i8p-Ui-VT7">
             <objects>
                 <tableViewController id="MkB-D7-l2f" customClass="categoryViewController" customModule="Todoey" customModuleProvider="target" sceneMemberID="viewController">
@@ -115,7 +117,8 @@
                         </connections>
                     </tableView>
                     <toolbarItems/>
-                    <navigationItem key="navigationItem" id="10b-mv-jVH">
+                    <navigationItem key="navigationItem" title="Todoey" id="10b-mv-jVH">
+                        <barButtonItem key="backBarButtonItem" title="Back" id="gBU-vu-9Rb"/>
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="VeP-EI-bmX">
                             <color key="tintColor" systemColor="labelColor"/>
                             <connections>
@@ -136,6 +139,9 @@
     <resources>
         <systemColor name="labelColor">
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="linkColor">
+            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

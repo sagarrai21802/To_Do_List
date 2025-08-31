@@ -30,12 +30,50 @@ class TableViewController:  SwipeTableViewController {
     //MARK: - VIEW DID LOAD UP
     override func viewDidLoad() {
         super.viewDidLoad()
-        print(FileManager.default.urls(for: .documentDirectory, in: .userDomainMask))
+//        print(FileManager.default.urls(for: .documentDirectory, in: .userDomainMask))
         loadData()
         tableView.rowHeight = 80.0
+        title = selectedItem?.title
+        
+//        navigationController?.navigationBar.tintColor = UIColor { traitCollection in
+//            return traitCollection.userInterfaceStyle == .dark ? .white : .black
+//        }
     }
     
-    
+    @IBOutlet weak var searchbar: UISearchBar!
+    //    override func viewWillAppear(_ animated: Bool) {
+//        guard let navbar = navigationController?.navigationBar else {
+//            fatalError("fatal error in finding the navigationbar")
+//        }
+//        
+//        if let hexcode = selectedItem?.color {
+//            navbar.tintColor = UIColor.fromHex(hexcode)
+//            navbar.backgroundColor = UIColor.fromHex(hexcode)
+//        } else  {
+//            print("help")
+//        }
+//    }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        guard let navbar = navigationController?.navigationBar else { return }
+        
+        if let hexcode = selectedItem?.color {
+            let color = UIColor.fromHex(hexcode)
+//            searchbar.tintColor = color
+            searchbar.searchTextField.backgroundColor = .label
+            searchbar.barTintColor = color
+//            navbar.largeTitleTextAttributes = []
+            let appearance = UINavigationBarAppearance()
+            appearance.configureWithOpaqueBackground()
+            appearance.backgroundColor = color  // Covers full area, including status bar
+            
+            navbar.standardAppearance = appearance
+            navbar.scrollEdgeAppearance = appearance
+            navbar.compactAppearance = appearance
+            navbar.tintColor = .white // Change as needed
+        }
+    }
     
     
     //MARK: - NUmber of rows
@@ -59,6 +97,30 @@ class TableViewController:  SwipeTableViewController {
 //        }
 //        return cell
 //    }
+//    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+//        let cell = super.tableView(tableView, cellForRowAt: indexPath)
+//        
+//        if let item = dataitem?[indexPath.row] {
+//            cell.textLabel?.text = item.name
+//            cell.accessoryType = item.done ? .checkmark : .none
+//            
+//            if let baseColorHex = selectedItem?.color {
+//                let baseColor = UIColor.fromHex(baseColorHex)
+//                let totalItems = dataitem?.count ?? 1
+//                let factor = CGFloat(indexPath.row) / CGFloat(totalItems)
+//                let shadedColor = baseColor.withAlphaComponent(1.0 - factor * 0.7)
+//                
+//                cell.backgroundColor = shadedColor
+//                cell.textLabel?.textColor = .white
+//            }
+//        } else {
+//            cell.textLabel?.text = "Till now we don't have any item in it"
+//            cell.backgroundColor = UIColor.gray
+//        }
+//        
+//        return cell
+//    }
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = super.tableView(tableView, cellForRowAt: indexPath)
         
@@ -69,15 +131,21 @@ class TableViewController:  SwipeTableViewController {
             if let baseColorHex = selectedItem?.color {
                 let baseColor = UIColor.fromHex(baseColorHex)
                 let totalItems = dataitem?.count ?? 1
-                let factor = CGFloat(indexPath.row) / CGFloat(totalItems)
+                // REVERSED: Top cells -> darker, bottom cells -> lighter
+                let factor = 1.0 - (CGFloat(indexPath.row) / CGFloat(max(totalItems - 1, 1)))
                 let shadedColor = baseColor.withAlphaComponent(1.0 - factor * 0.7)
-                
+
                 cell.backgroundColor = shadedColor
-                cell.textLabel?.textColor = .white
+
+                // Dynamic text color based on brightness
+                var white: CGFloat = 0
+                shadedColor.getWhite(&white, alpha: nil)
+                cell.textLabel?.textColor = white < 0.6 ? .white : .black
             }
         } else {
             cell.textLabel?.text = "Till now we don't have any item in it"
             cell.backgroundColor = UIColor.gray
+            cell.textLabel?.textColor = .white
         }
         
         return cell
@@ -329,8 +397,6 @@ extension TableViewController : UISearchBarDelegate {
                 
         }
         }
-       
-        
     }
 }
 

@@ -292,11 +292,47 @@ class categoryViewController: SwipeTableViewController  {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        print(FileManager.default.urls(for: .documentDirectory, in: .userDomainMask))
+//        print(FileManager.default.urls(for: .documentDirectory, in: .userDomainMask))
         loadcategories()
         tableView.rowHeight = 80.0
+
     }
     
+    
+//    override func viewWillAppear(_ animated: Bool) {
+////        guard let navbar = navigationController?.navigationBar else {
+////            fatalError("Some error occured in loading the navigtion bar of categoryviewcontroller")
+////        }
+////         
+////        
+////        navbar.barTintColor = .blue
+////        navbar.tintColor = .black
+////
+////     let appearance = UINavigationBarAppearance()
+////        appearance.backgroundColor = .blue
+//    }
+    
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        guard let navbar = navigationController?.navigationBar else {
+            fatalError("Navigation bar not found")
+        }
+        
+        let appearance = UINavigationBarAppearance()
+        appearance.configureWithOpaqueBackground() // ensures solid color
+        appearance.backgroundColor = .systemPink
+        appearance.titleTextAttributes = [.foregroundColor: UIColor.white] // Title color
+        appearance.largeTitleTextAttributes = [.foregroundColor: UIColor.white]
+        
+        navbar.standardAppearance = appearance
+        navbar.scrollEdgeAppearance = appearance // For large titles when scrolled
+        navbar.compactAppearance = appearance // For compact nav bars (like in landscape)
+        
+        navbar.tintColor = .white // For back button and bar button items
+    }
+        
     // MARK: - TableView DataSource Methods
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return categoryItem?.count ?? 1
@@ -365,6 +401,7 @@ class categoryViewController: SwipeTableViewController  {
     // MARK: - Data Manipulation Methods
     func loadcategories() {
         categoryItem = realm.objects(Category.self)
+        tableView.reloadData()
     }
     
     override func updatetable(at indexpath: IndexPath) {
@@ -438,13 +475,23 @@ extension categoryViewController : UISearchBarDelegate {
         }
         tableView.reloadData()
     }
+//    
+//    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+//        if searchBar.text?.count == 0 {
+//            loadcategories()
+//            DispatchQueue.main.async {
+//                searchBar.resignFirstResponder()
+//            }
+//        }
+//    }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         if searchBar.text?.count == 0 {
             loadcategories()
             DispatchQueue.main.async {
                 searchBar.resignFirstResponder()
-            }
+                
+        }
         }
     }
 }

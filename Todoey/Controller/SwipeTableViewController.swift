@@ -84,33 +84,7 @@ class SwipeTableViewController: UITableViewController , SwipeTableViewCellDelega
     }
 }
 
-//
-//extension UIColor {
-//    static func randomFlat() -> String {
-////        var hexcode : String?
-//        let colorHexCodes: [String] = [
-//            // System-inspired colors
-//            "#FF3B30", "#007AFF", "#34C759", "#FF9500", "#FF2D55",
-//            "#AF52DE", "#5AC8FA", "#FFCC00", "#5856D6", "#A2845E",
-//            "#8E8E93", "#AEAEB2", "#C7C7CC", "#D1D1D6", "#E5E5EA", "#F2F2F7",
-//            
-//            // Basic colors
-//            "#000000", "#A9A9A9", "#D3D3D3", "#FFFFFF",
-//            
-//            // Flat/Vibrant inspired colors
-//            "#F1C40F", "#E74C3C", "#2ECC71", "#3498DB", "#9B59B6", "#34495E",
-//            "#2980B9", "#E74C3C", "#E67E22", "#5DADE2", "#8E44AD", "#1ABC9C",
-//            "#2ECC71", "#F39C12", "#D35400", "#E67E22", "#B7950B", "#3A539B",
-//            "#A93226", "#7FB3D5", "#196F3D", "#C0392B", "#CA6F1E", "#6E2C00",
-//            "#E91E63", "#800080", "#6495ED", "#DAA520", "#B8860B", "#FA8072",
-//            "#ADD8E6"
-//        ]
-//        
-//        return colorHexCodes.randomElement() ?? "#6495ED"
-//    }
-//}
 
-//
 extension UIColor {
     // Convert hex string to UIColor
     static func fromHex(_ hex: String) -> UIColor {
